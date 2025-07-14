@@ -38,17 +38,12 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      // EmailJS configuration - REPLACE THESE WITH YOUR ACTUAL EMAILJS CREDENTIALS
-      // 1. Go to https://www.emailjs.com/ and create an account
-      // 2. Add your email service (Gmail, Outlook, etc.)
-      // 3. Create an email template with variables: {{user_name}}, {{user_email}}, {{subject}}, {{message}}
-      // 4. Replace the values below with your actual IDs
-      const result = await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formRef.current!,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      const result = await fetch(`${API_BASE_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message })
+      });
 
       if (result.status === 200) {
         setSubmitStatus('success');

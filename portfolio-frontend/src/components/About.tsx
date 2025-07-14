@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { User, Code, Coffee, Heart } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const scrollToProjects = () => {
   const element = document.querySelector('#projects');
@@ -7,6 +8,19 @@ const scrollToProjects = () => {
 };
 
 const About = () => {
+  const [about, setAbout] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/about`)
+      .then(res => res.json())
+      .then(data => setAbout(data));
+  }, []);
+
+  if (!about) {
+    return <div>Loading...</div>;
+  }
+
   const stats = [
     { icon: Code, value: '1+', label: 'Years Experience' },
     { icon: Coffee, value: '20+', label: 'Projects Completed' },

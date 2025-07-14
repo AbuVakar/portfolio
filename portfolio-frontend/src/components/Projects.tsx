@@ -1,60 +1,17 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Eye, Code, Globe, Smartphone } from 'lucide-react';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Projects = () => {
-  const projects = [
-    {
-      title: 'Portfolio Website',
-      description: 'A modern, responsive personal portfolio website to showcase my skills, experience, certifications, and projects. Built with React, TypeScript, Tailwind CSS, and Node.js/Express backend.',
-      image: '/portfolio.png',
-      technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'Vite'],
-      category: 'Frontend',
-      liveUrl: '', // Add your live site link if available
-      githubUrl: 'https://github.com/AbuVakar/portfolio',
-      featured: true,
-    },
-    {
-      title: 'Customer Query Management System (CQM)',
-      description: 'A web-based solution for managing customer queries efficiently. Features include ticketing, status tracking, and analytics.',
-      image: '',
-      technologies: ['JavaScript'],
-      category: 'Full Stack',
-      liveUrl: '',
-      githubUrl: 'https://github.com/AbuVakar/cqm',
-      featured: false,
-    },
-    {
-      title: 'Sentiment Analysis AI',
-      description: 'BERT-based Sentiment Analysis API using Flask. Provides sentiment predictions for text data.',
-      image: '',
-      technologies: ['Python', 'Flask', 'BERT'],
-      category: 'AI/ML',
-      liveUrl: '',
-      githubUrl: 'https://github.com/AbuVakar/sentiment-analysis-ai',
-      featured: false,
-    },
-    {
-      title: 'Bank Churn Predictor',
-      description: 'A Flask-based machine learning app to predict bank customer churn. Includes data visualization and model explainability.',
-      image: '',
-      technologies: ['Python', 'Flask', 'Machine Learning'],
-      category: 'AI/ML',
-      liveUrl: '',
-      githubUrl: 'https://github.com/AbuVakar/bank-churn-predictor',
-      featured: false,
-    },
-    {
-      title: 'AI Quiz App',
-      description: 'Gamified AI-based Quiz Platform with Adaptive Learning. Engages users with quizzes and tracks progress.',
-      image: '',
-      technologies: ['HTML', 'JavaScript'],
-      category: 'Frontend',
-      liveUrl: '',
-      githubUrl: 'https://github.com/AbuVakar/ai-quiz-app',
-      featured: false,
-    },
-  ];
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/projects`)
+      .then(res => res.json())
+      .then(data => setProjects(data));
+  }, []);
 
   const categories = ['All', 'Full Stack', 'Frontend', 'Backend', 'Mobile', 'AI/ML'];
   const [selectedCategory, setSelectedCategory] = useState('All');
