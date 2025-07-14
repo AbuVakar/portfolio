@@ -3,9 +3,20 @@ import { ExternalLink, Github, Eye, Code, Globe, Smartphone } from 'lucide-react
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  category: string;
+  liveUrl: string;
+  githubUrl: string;
+  featured: boolean;
+};
+
 const Projects = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/projects`)
