@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   console.log('SERVICE:', import.meta.env.VITE_EMAILJS_SERVICE_ID);
