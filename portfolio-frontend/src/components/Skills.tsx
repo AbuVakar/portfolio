@@ -3,9 +3,6 @@ import { Code, Database, Palette, Server, Award, User } from 'lucide-react';
 import { SiHtml5, SiCss3, SiJavascript, SiReact, SiTypescript, SiNextdotjs, SiTailwindcss, SiBootstrap, SiNodedotjs, SiExpress, SiPython, SiFlask, SiJsonwebtokens, SiPostman, SiMongodb, SiMysql, SiDocker, SiRedis, SiFirebase, SiMongoose, SiFigma, SiGit, SiGithub, SiGoogledrive, SiOpenai, SiScikitlearn, SiPandas, SiHuggingface, SiJest, SiSocketdotio } from 'react-icons/si';
 import { FaAws, FaServer, FaTools, FaBrain, FaChartBar, FaKey, FaRobot, FaFileExcel, FaCode, FaComments, FaUsers, FaSyncAlt, FaLightbulb, FaHandsHelping, FaSearch, FaClock } from 'react-icons/fa';
 import { IoLogoVercel } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Skills = () => {
   // Removed unused skills state and setSkills
