@@ -125,7 +125,7 @@ app.get('/api/about', (req, res) => {
 });
 
 // Contact API (for storing contact form submissions)
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', (req, res) => {
   const { name, email, subject, message } = req.body;
 
   // Validate required fields
@@ -136,28 +136,13 @@ app.post('/api/contact', async (req, res) => {
     });
   }
 
-  try {
-    const response = await axios.post('https://api.emailjs.com/api/v1.0/email/send', {
-      service_id: process.env.EMAILJS_SERVICE_ID,
-      template_id: process.env.EMAILJS_TEMPLATE_ID,
-      user_id: process.env.EMAILJS_PUBLIC_KEY,
-      template_params: {
-        from_name: name,
-        from_email: email,
-        subject: subject,
-        message: message
-      }
-    });
+  // Log the contact form submission
+  console.log('Contact form submission:', { name, email, subject, message });
 
-    if (response.status === 200) {
-      return res.json({ success: true, message: 'Message sent successfully!' });
-    } else {
-      return res.status(500).json({ success: false, message: 'Failed to send message.' });
-    }
-  } catch (error: any) {
-    console.error('EmailJS Error:', error.response?.data || error.message || error);
-    return res.status(500).json({ success: false, message: 'Failed to send message.', error: error.message });
-  }
+  return res.json({
+    success: true,
+    message: 'Message received successfully!'
+  });
 });
 
 // Mailchimp Subscribe API

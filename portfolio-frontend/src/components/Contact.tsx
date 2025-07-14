@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
+import emailjs from 'emailjs-com';
 
 const Contact = () => {
   console.log('SERVICE:', import.meta.env.VITE_EMAILJS_SERVICE_ID);
@@ -38,24 +39,19 @@ const Contact = () => {
     setSubmitStatus('idle');
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-      const result = await fetch(`${API_BASE_URL}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID!,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
           subject: formData.subject,
           message: formData.message
-        })
-      });
-
-      if (result.status === 200) {
-        setSubmitStatus('success');
-        formRef.current?.reset();
-      } else {
-        setSubmitStatus('error');
-      }
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY!
+      );
+      setSubmitStatus('success');
+      formRef.current?.reset();
     } catch (error) {
       console.error('EmailJS Error:', error);
       setSubmitStatus('error');
