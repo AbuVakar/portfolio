@@ -1,3 +1,4 @@
+// Trigger redeploy: minor comment for Vercel build
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
