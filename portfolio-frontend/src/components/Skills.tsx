@@ -8,13 +8,8 @@ import { useEffect, useState } from 'react';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Skills = () => {
-  const [skills, setSkills] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/skills`)
-      .then(res => res.json())
-      .then(data => setSkills(data));
-  }, []);
+  // Removed unused skills state and setSkills
+  // Removed useEffect fetching skills from API_BASE_URL
 
   const skillCategories = [
     {
