@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Instagram, Github, Youtube, Twitter } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   console.log('SERVICE:', import.meta.env.VITE_EMAILJS_SERVICE_ID);
@@ -10,6 +9,7 @@ const Contact = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
   const contactInfo = [
     {
@@ -42,7 +42,12 @@ const Contact = () => {
       const result = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, subject, message })
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
       });
 
       if (result.status === 200) {
@@ -227,6 +232,8 @@ const Contact = () => {
                     id="name"
                     name="user_name"
                     required
+                    value={formData.name}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-200"
                     placeholder="Your name"
                   />
@@ -242,6 +249,8 @@ const Contact = () => {
                     id="email"
                     name="user_email"
                     required
+                    value={formData.email}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-200"
                     placeholder="your.email@example.com"
                   />
@@ -257,6 +266,8 @@ const Contact = () => {
                     id="subject"
                     name="subject"
                     required
+                    value={formData.subject}
+                    onChange={e => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-200"
                     placeholder="What's this about?"
                   />
@@ -272,6 +283,8 @@ const Contact = () => {
                     name="message"
                     required
                     rows={5}
+                    value={formData.message}
+                    onChange={e => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors duration-200 resize-none"
                     placeholder="Tell me about your project..."
                   />
